@@ -1,0 +1,14 @@
+.env
+.venv/
+__pycache__/
+*.pyc
+.DS_Store
+
+# Node / Next.js dashboard
+web/node_modules/
+web/.next/
+web/out/
+web/next-env.d.ts
+
+# NOTE: reports/ is intentionally committed so the public dashboard can read
+# the daily briefings. Do not ignore it.
