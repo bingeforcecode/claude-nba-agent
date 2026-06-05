@@ -8,10 +8,10 @@ export default function Home() {
   if (!report) {
     return (
       <div className="mx-auto max-w-6xl px-5 py-20 text-center">
-        <h1 className="text-2xl font-bold text-white">
+        <h1 className="text-2xl font-bold text-zinc-900">
           Basketball Kings — Daily Briefing
         </h1>
-        <p className="mt-3 text-white/50">
+        <p className="mt-3 text-zinc-500">
           No briefings yet. Run the agent to generate one.
         </p>
       </div>

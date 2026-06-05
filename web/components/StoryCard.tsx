@@ -3,28 +3,30 @@ import { CategoryBadge } from "./CategoryBadge";
 
 export function StoryCard({ story }: { story: Story }) {
   return (
-    <article className="flex flex-col gap-4 rounded-2xl border border-white/10 bg-white/[0.03] p-6 transition hover:border-white/20 hover:bg-white/[0.05]">
-      <div className="flex items-start justify-between gap-3">
+    <article className="group flex flex-col gap-4 rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm transition duration-200 hover:-translate-y-1 hover:border-zinc-300 hover:shadow-lg">
+      <div className="flex items-center justify-between">
         <CategoryBadge category={story.category} />
-        <span className="text-sm font-bold text-white/30">#{story.rank}</span>
+        <span className="text-sm font-extrabold tabular-nums text-zinc-300">
+          #{story.rank}
+        </span>
       </div>
 
-      <h2 className="text-xl font-bold leading-snug text-white">
+      <h2 className="text-lg font-bold leading-snug text-zinc-900">
         {story.headline}
       </h2>
 
       <div className="space-y-3 text-sm">
         <div>
-          <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-white/40">
+          <p className="mb-1 text-[11px] font-semibold uppercase tracking-wider text-zinc-400">
             The real story
           </p>
-          <p className="leading-relaxed text-white/80">{story.realStory}</p>
+          <p className="leading-relaxed text-zinc-600">{story.realStory}</p>
         </div>
         <div>
-          <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-white/40">
+          <p className="mb-1 text-[11px] font-semibold uppercase tracking-wider text-zinc-400">
             Why it pops
           </p>
-          <p className="leading-relaxed text-white/70">{story.whyItPops}</p>
+          <p className="leading-relaxed text-zinc-500">{story.whyItPops}</p>
         </div>
       </div>
 
@@ -33,12 +35,12 @@ export function StoryCard({ story }: { story: Story }) {
           href={story.sourceUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-auto inline-flex w-fit items-center gap-1 text-sm font-medium text-orange-300 hover:text-orange-200"
+          className="mt-auto inline-flex w-fit items-center gap-1 rounded-lg bg-zinc-50 px-3 py-1.5 text-sm font-medium text-zinc-700 ring-1 ring-inset ring-zinc-200 transition hover:bg-orange-50 hover:text-orange-700 hover:ring-orange-200"
         >
           {story.sourceLabel || "Source"} ↗
         </a>
       ) : (
-        <span className="mt-auto text-sm text-white/40">
+        <span className="mt-auto text-sm text-zinc-400">
           {story.sourceLabel}
         </span>
       )}
