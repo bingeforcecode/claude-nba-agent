@@ -51,11 +51,14 @@ function parseStory(block: string): Story | null {
   const headline = headMatch[2].trim();
 
   const source = field(block, "Source");
-  // Source format: "<label> — <url>"  (url is the last http(s) token)
-  const urlMatch = source.match(/https?:\/\/\S+/);
-  const sourceUrl = urlMatch ? urlMatch[0] : "";
+  // Source is "<label> — <url>", but Gemini often emits the url as a markdown
+  // link "[url](url)". Prefer the link target; fall back to a bare url.
+  const linkMatch = source.match(/\[[^\]]*\]\((https?:\/\/[^)]+)\)/);
+  const bareMatch = source.match(/https?:\/\/[^\s)\]]+/);
+  const sourceUrl = linkMatch ? linkMatch[1] : bareMatch ? bareMatch[0] : "";
   const sourceLabel = source
-    .replace(sourceUrl, "")
+    .replace(/\[[^\]]*\]\([^)]*\)/g, "") // strip the markdown link
+    .replace(/https?:\/\/\S+/g, "") // strip any leftover bare url
     .replace(/[—–-]\s*$/, "")
     .trim();
 
