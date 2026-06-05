@@ -1,14 +1,17 @@
 """Basketball Kings daily news briefing agent.
 
-Gathers the latest videos from a set of NBA YouTubers, then uses Claude with
-web search to find today's top NBA stories that fit the show's format: star
-trade rumors, firings/front-office drama, signings & big-market moves, and
-beefs/off-court drama. For each story it produces an episode-ready angle (a
-catchy, Basketball Kings-style headline) plus a factual summary and a source,
-and writes a ranked top-10 briefing to reports/<date>.md.
+Gathers the latest videos from a set of NBA YouTubers, then uses Google Gemini
+with Google Search grounding to find today's top NBA stories that fit the
+show's format: star trade rumors, firings/front-office drama, signings &
+big-market moves, and beefs/off-court drama. For each story it produces an
+episode-ready angle (a catchy, Basketball Kings-style headline) plus a factual
+summary and a source, and writes a ranked top-10 briefing to reports/<date>.md.
+
+Gemini runs on its free tier (free API key, no credit card; Google Search
+grounding has a generous free monthly quota), so a daily run costs $0.
 
 Usage:
-    uv run agent.py            # full run (needs ANTHROPIC_API_KEY)
+    uv run agent.py            # full run (needs GEMINI_API_KEY)
     uv run agent.py --dry-run  # only gather YouTube material and print it
 """
 
@@ -25,7 +28,7 @@ import sources
 
 ROOT = Path(__file__).parent
 REPORTS_DIR = ROOT / "reports"
-MODEL = "claude-opus-4-6"
+MODEL = "gemini-2.5-flash"
 
 
 def gather_youtube():
@@ -129,38 +132,27 @@ as you found and note how many at the end.
 
 
 def run_agent(prompt):
-    import anthropic
+    from google import genai
+    from google.genai import types
 
-    client = anthropic.Anthropic()
-    # max_uses caps web searches per run to keep cost bounded (each search is
-    # billed). ~15 is plenty to corroborate 10 stories.
-    tools = [{"type": "web_search_20260209", "name": "web_search", "max_uses": 15}]
-    messages = [{"role": "user", "content": prompt}]
-
-    max_continuations = 8
-    for _ in range(max_continuations):
-        response = client.messages.create(
-            model=MODEL,
-            max_tokens=16000,
-            thinking={"type": "adaptive"},
-            output_config={"effort": "high"},
-            tools=tools,
-            messages=messages,
-        )
-        if response.stop_reason == "pause_turn":
-            # Server-side tool loop paused; append and resend to continue.
-            messages.append({"role": "assistant", "content": response.content})
-            continue
-        # end_turn (or anything else terminal): extract the report text.
-        return _clean(response)
-
-    # Hit the continuation cap; return whatever text we have.
-    return _clean(response)
+    # Reads GEMINI_API_KEY from the environment automatically.
+    client = genai.Client()
+    # Google Search grounding lets Gemini corroborate stories with live web
+    # results. It's covered by a generous free monthly quota, so each run is $0.
+    config = types.GenerateContentConfig(
+        tools=[types.Tool(google_search=types.GoogleSearch())],
+    )
+    response = client.models.generate_content(
+        model=MODEL,
+        contents=prompt,
+        config=config,
+    )
+    return _clean(response.text or "")
 
 
-def _clean(response):
-    """Join text blocks and trim any preamble before the report title."""
-    text = "".join(b.text for b in response.content if b.type == "text").strip()
+def _clean(text):
+    """Trim any preamble before the report title."""
+    text = text.strip()
     marker = "# Basketball Kings"
     idx = text.find(marker)
     return text[idx:] if idx != -1 else text
@@ -175,7 +167,7 @@ def main():
     )
     args = parser.parse_args()
 
-    # override=True because the shell/uv may pre-set an empty ANTHROPIC_API_KEY,
+    # override=True because the shell/uv may pre-set an empty GEMINI_API_KEY,
     # which would otherwise shadow the value in .env.
     load_dotenv(ROOT / ".env", override=True)
 
