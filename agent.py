@@ -104,15 +104,23 @@ The show turns real NBA news into punchy, must-click episodes. Past hits:
 The formula: short, sensational, emoji-driven, often a question — but always
 anchored to a REAL story. Big markets (LA, NY), star players, and drama pop.
 
-Find the best NBA stories from the last 24-48 hours that fit ONLY these story
-types:
+FIRST, use web search to establish what is happening in the NBA RIGHT NOW, as
+of {today}: search for the very latest headlines, last night's games, and —
+during the playoffs/Finals — the most recent game results and the storylines
+and drama coming out of them. Anchor the briefing to the freshest developments;
+do not lean on rumors from days ago when bigger news broke since.
+
+Then build the best episode angles that fit these story types:
 {categories}
+Playoff/Finals games themselves are fair game whenever they create a real
+storyline or drama (a series swing, a star's meltdown or heroics, a blowout,
+a controversy) — pitch those as Beef/Fight or the closest matching angle.
 
 {yt_block}
-Use web search to find current, REAL stories. Every angle you pitch must be
-backed by an actual report from a reputable source — clickbait is fine, making
-things up is not. Discard anything outside the story types above. Discard stale
-stories (older than ~3 days) unless they had a major new development today.
+Every angle you pitch must be backed by an actual report from a reputable
+source — clickbait is fine, making things up is not. Prioritize breaking
+developments from the last 24 hours over older rumors. Discard stale stories
+(older than ~3 days) unless they had a major new development today.
 
 Then produce a ranked briefing of the TOP {sources.TOP_N} episode ideas, ranked
 by how strong an episode each would make (juice + recency). Output ONLY clean
