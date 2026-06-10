@@ -30,20 +30,31 @@ export function StoryCard({ story }: { story: Story }) {
         </div>
       </div>
 
-      {story.sourceUrl ? (
-        <a
-          href={story.sourceUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="mt-auto inline-flex w-fit items-center gap-1 rounded-lg bg-zinc-50 px-3 py-1.5 text-sm font-medium text-zinc-700 ring-1 ring-inset ring-zinc-200 transition hover:bg-orange-50 hover:text-orange-700 hover:ring-orange-200"
-        >
-          {story.sourceLabel || "Source"} ↗
-        </a>
-      ) : (
-        <span className="mt-auto text-sm text-zinc-400">
-          {story.sourceLabel}
-        </span>
-      )}
+      <div className="mt-auto flex flex-wrap items-center gap-2">
+        {story.sourceUrl ? (
+          <a
+            href={story.sourceUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex w-fit items-center gap-1 rounded-lg bg-zinc-50 px-3 py-1.5 text-sm font-medium text-zinc-700 ring-1 ring-inset ring-zinc-200 transition hover:bg-orange-50 hover:text-orange-700 hover:ring-orange-200"
+          >
+            {story.sourceLabel || "Source"} ↗
+          </a>
+        ) : (
+          <span className="text-sm text-zinc-400">{story.sourceLabel}</span>
+        )}
+
+        {story.clipUrl && (
+          <a
+            href={story.clipUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex w-fit items-center gap-1 rounded-lg bg-sky-50 px-3 py-1.5 text-sm font-medium text-sky-700 ring-1 ring-inset ring-sky-200 transition hover:bg-sky-100"
+          >
+            ▶ Watch clip
+          </a>
+        )}
+      </div>
     </article>
   );
 }

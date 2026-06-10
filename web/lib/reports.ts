@@ -20,6 +20,7 @@ export interface Story {
   whyItPops: string;
   sourceLabel: string;
   sourceUrl: string;
+  clipUrl: string;
 }
 
 export interface Report {
@@ -62,6 +63,12 @@ function parseStory(block: string): Story | null {
     .replace(/[—–-]\s*$/, "")
     .trim();
 
+  // Optional video-clip tweet/post for the story. "None" (or empty) = no clip.
+  const clip = field(block, "Clip");
+  const clipLink = clip.match(/\[[^\]]*\]\((https?:\/\/[^)]+)\)/);
+  const clipBare = clip.match(/https?:\/\/[^\s)\]]+/);
+  const clipUrl = clipLink ? clipLink[1] : clipBare ? clipBare[0] : "";
+
   return {
     rank,
     headline,
@@ -70,6 +77,7 @@ function parseStory(block: string): Story | null {
     whyItPops: field(block, "Why it pops"),
     sourceLabel: sourceLabel || source,
     sourceUrl,
+    clipUrl,
   };
 }
 

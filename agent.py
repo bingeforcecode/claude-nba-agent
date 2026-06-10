@@ -110,6 +110,15 @@ during the playoffs/Finals — the most recent game results and the storylines
 and drama coming out of them. Anchor the briefing to the freshest developments;
 do not lean on rumors from days ago when bigger news broke since.
 
+X / TWITTER IS A PRIMARY SOURCE. The fastest NBA news, insider reports (Woj,
+Shams, Stein), player reactions, beefs, and viral video clips break on X first.
+Search X/Twitter directly (e.g. queries like "site:x.com NBA <topic>",
+"NBA twitter <player>", or the reporter's handle) for breaking posts. Treat a
+tweet — especially a video-clip tweet (a clip of a press conference, an
+altercation, a player going off, a leaked moment) — as a legitimate, citable
+source. When a story originates from or is best captured by an X post, cite
+that post's URL directly.
+
 Then build the best episode angles that fit these story types:
 {categories}
 Playoff/Finals games themselves are fair game whenever they create a real
@@ -118,9 +127,12 @@ a controversy) — pitch those as Beef/Fight or the closest matching angle.
 
 {yt_block}
 Every angle you pitch must be backed by an actual report from a reputable
-source — clickbait is fine, making things up is not. Prioritize breaking
-developments from the last 24 hours over older rumors. Discard stale stories
-(older than ~3 days) unless they had a major new development today.
+source — a publication, a YouTuber, OR an X/Twitter post (a reporter's tweet or
+a video-clip tweet). Clickbait is fine, making things up is not. Favor stories
+that have a strong X post or video clip behind them — those make the punchiest
+episodes. Prioritize breaking developments from the last 24 hours over older
+rumors. Discard stale stories (older than ~3 days) unless they had a major new
+development today.
 
 Then produce a ranked briefing of the TOP {sources.TOP_N} episode ideas, ranked
 by how strong an episode each would make (juice + recency). Output ONLY clean
@@ -132,7 +144,8 @@ GitHub-flavored markdown in EXACTLY this format, with no preamble:
 - **Category:** <Trade rumor | Firing/Drama | Signing/Move | Beef/Fight>
 - **The real story:** <1-2 factual sentences on what actually happened/was reported>
 - **Why it pops:** <one short line on the hook for the show>
-- **Source:** <publication or YouTuber name> — <url>
+- **Source:** <publication, YouTuber, or "@handle on X"> — <url>
+- **Clip:** <url of a video-clip tweet/post for this story, or "None">
 
 If you genuinely cannot find {sources.TOP_N} qualifying stories, include as many
 as you found and note how many at the end.
